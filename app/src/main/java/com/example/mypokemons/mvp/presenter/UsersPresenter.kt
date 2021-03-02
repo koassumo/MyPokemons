@@ -1,9 +1,8 @@
 package com.example.mypokemons.mvp.presenter
 
-import com.example.igorpokemon.mvp.model.entity.PokemonSpecies
+import com.example.igorpokemon.mvp.model.entity.UserPokemonSpecies
 import io.reactivex.rxjava3.core.Scheduler
 import moxy.MvpPresenter
-import com.example.mypokemons.mvp.model.entity.GithubUser
 import com.example.mypokemons.mvp.model.repo.IGithubUsersRepo
 import com.example.mypokemons.mvp.presenter.list.IUserListPresenter
 import com.example.mypokemons.mvp.view.UsersView
@@ -13,7 +12,7 @@ import ru.terrakok.cicerone.Router
 class UsersPresenter(val mainThreadScheduler: Scheduler, val usersRepo: IGithubUsersRepo, val router: Router) : MvpPresenter<UsersView>() {
 
     class UsersListPresenter : IUserListPresenter {
-        val users = mutableListOf<PokemonSpecies>()
+        val users = mutableListOf<UserPokemonSpecies>()
 
         override var itemClickListener: ((UserItemView) -> Unit)? = null
 
@@ -46,15 +45,15 @@ class UsersPresenter(val mainThreadScheduler: Scheduler, val usersRepo: IGithubU
                 usersListPresenter.users.clear()
 
 
-                val pokemonSpeciesList: MutableList<PokemonSpecies> = arrayListOf()
+                val listPokemonSpecies: MutableList<UserPokemonSpecies> = arrayListOf()
                 users.pokemon_entries?.let {
                     for (i in 0 .. (it.size - 1) ) {
-                        pokemonSpeciesList.add(it.get(i).pokemon_species!!)
-                        pokemonSpeciesList[i].pokemonUrl = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/" + (i+1) + ".png"
+                        listPokemonSpecies.add(it.get(i).pokemon_species!!)
+                        listPokemonSpecies[i].pokemonUrl = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/" + (i+1) + ".png"
                     }
                 }
 
-                usersListPresenter.users.addAll(pokemonSpeciesList)
+                usersListPresenter.users.addAll(listPokemonSpecies)
                 viewState.updateList()
             }, {
                 println("Error: ${it.message}")

@@ -7,7 +7,7 @@ import kotlinx.android.parcel.Parcelize
 
 
 @Parcelize
-class PokemonSpecies(
+class UserPokemonSpecies(
     @Expose
     @SerializedName("name")
     var pokemonName: String? = null,

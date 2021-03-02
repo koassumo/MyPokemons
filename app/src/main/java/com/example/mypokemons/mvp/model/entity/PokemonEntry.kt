@@ -10,7 +10,7 @@ class PokemonEntry(
     var entry_number: Int, //-------- not used
 
     @Expose
-    var pokemon_species: PokemonSpecies? = null
+    var pokemon_species: UserPokemonSpecies? = null
 
 ) : Parcelable
 

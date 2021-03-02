@@ -7,7 +7,6 @@ import com.example.mypokemons.App
 import com.example.mypokemons.R
 import com.example.mypokemons.mvp.presenter.MainPresenter
 import com.example.mypokemons.mvp.view.MainView
-import com.example.mypokemons.rxjavatest.BackPressure
 import ru.terrakok.cicerone.android.support.SupportAppNavigator
 
 class MainActivity : MvpAppCompatActivity(), MainView {
@@ -25,7 +24,7 @@ class MainActivity : MvpAppCompatActivity(), MainView {
         //Creation().exec()
         //Operators().exec()
         //Sources().exec()
-        BackPressure().exec()
+        //BackPressure().exec()
     }
 
     override fun onResumeFragments() {
