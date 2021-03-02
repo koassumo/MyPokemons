@@ -15,7 +15,7 @@ class ApiHolder {
             .create()
 
         Retrofit.Builder()
-            .baseUrl("https://api.github.com")
+            .baseUrl("https://pokeapi.co/api/v2/")
             .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
             .addConverterFactory(GsonConverterFactory.create(gson))
             .build()

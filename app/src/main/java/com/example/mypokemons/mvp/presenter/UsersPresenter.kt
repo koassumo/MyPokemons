@@ -1,5 +1,6 @@
 package com.example.mypokemons.mvp.presenter
 
+import com.example.igorpokemon.mvp.model.entity.PokemonSpecies
 import io.reactivex.rxjava3.core.Scheduler
 import moxy.MvpPresenter
 import com.example.mypokemons.mvp.model.entity.GithubUser
@@ -12,7 +13,7 @@ import ru.terrakok.cicerone.Router
 class UsersPresenter(val mainThreadScheduler: Scheduler, val usersRepo: IGithubUsersRepo, val router: Router) : MvpPresenter<UsersView>() {
 
     class UsersListPresenter : IUserListPresenter {
-        val users = mutableListOf<GithubUser>()
+        val users = mutableListOf<PokemonSpecies>()
 
         override var itemClickListener: ((UserItemView) -> Unit)? = null
 
@@ -21,8 +22,8 @@ class UsersPresenter(val mainThreadScheduler: Scheduler, val usersRepo: IGithubU
         override fun bindView(view: UserItemView) {
             val user = users[view.pos]
 
-            user.login?.let { view.setLogin(it) }
-            user.avatarUrl?.let {view.loadAvatar(it)}
+            user.pokemonName?.let { view.setLogin(it) }
+            user.pokemonUrl?.let {view.loadAvatar(it)}
         }
     }
 
@@ -43,7 +44,17 @@ class UsersPresenter(val mainThreadScheduler: Scheduler, val usersRepo: IGithubU
             .observeOn(mainThreadScheduler)
             .subscribe({ users ->
                 usersListPresenter.users.clear()
-                usersListPresenter.users.addAll(users)
+
+
+                val pokemonSpeciesList: MutableList<PokemonSpecies> = arrayListOf()
+                users.pokemon_entries?.let {
+                    for (i in 0 .. (it.size - 1) ) {
+                        pokemonSpeciesList.add(it.get(i).pokemon_species!!)
+                        pokemonSpeciesList[i].pokemonUrl = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/" + (i+1) + ".png"
+                    }
+                }
+
+                usersListPresenter.users.addAll(pokemonSpeciesList)
                 viewState.updateList()
             }, {
                 println("Error: ${it.message}")
