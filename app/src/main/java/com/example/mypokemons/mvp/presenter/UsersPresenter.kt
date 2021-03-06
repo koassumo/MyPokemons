@@ -7,6 +7,7 @@ import com.example.mypokemons.mvp.model.repo.IGithubUsersRepo
 import com.example.mypokemons.mvp.presenter.list.IUserListPresenter
 import com.example.mypokemons.mvp.view.UsersView
 import com.example.mypokemons.mvp.view.list.UserItemView
+import com.example.mypokemons.navigation.Screens
 import ru.terrakok.cicerone.Router
 
 class UsersPresenter(val mainThreadScheduler: Scheduler, val usersRepo: IGithubUsersRepo, val router: Router) : MvpPresenter<UsersView>() {
@@ -33,8 +34,10 @@ class UsersPresenter(val mainThreadScheduler: Scheduler, val usersRepo: IGithubU
         viewState.init()
         loadData()
 
+        // реакция на нажатие элемента в списке здесь
         usersListPresenter.itemClickListener = {itemView ->
-            // TODO:
+            val login =  usersListPresenter.users[itemView.pos].pokemonName
+            router.navigateTo(Screens.LoginScreen(login!!)) //instead of "replaceScreen"
         }
     }
 

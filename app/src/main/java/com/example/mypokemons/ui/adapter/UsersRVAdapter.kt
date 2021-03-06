@@ -11,6 +11,7 @@ import com.example.mypokemons.R
 import com.example.mypokemons.mvp.model.image.IImageLoader
 import com.example.mypokemons.mvp.presenter.list.IUserListPresenter
 import com.example.mypokemons.mvp.view.list.UserItemView
+import kotlinx.android.synthetic.main.fragment_users.view.*
 
 class UsersRVAdapter(val presenter : IUserListPresenter, val imageLoader : IImageLoader<ImageView>) : RecyclerView.Adapter<UsersRVAdapter.ViewHolder>() {
 
