@@ -1,5 +1,6 @@
 package com.example.mypokemons.mvp.presenter
 
+import com.example.igorpokemon.mvp.model.entity.PokedexKanto
 import com.example.igorpokemon.mvp.model.entity.UserPokemonSpecies
 import io.reactivex.rxjava3.core.Scheduler
 import moxy.MvpPresenter
@@ -8,6 +9,7 @@ import com.example.mypokemons.mvp.presenter.list.IUserListPresenter
 import com.example.mypokemons.mvp.view.UsersView
 import com.example.mypokemons.mvp.view.list.UserItemView
 import com.example.mypokemons.navigation.Screens
+import io.reactivex.rxjava3.core.Single
 import ru.terrakok.cicerone.Router
 
 class UsersPresenter(val mainThreadScheduler: Scheduler, val usersRepo: IGithubUsersRepo, val router: Router) : MvpPresenter<UsersView>() {
@@ -42,21 +44,24 @@ class UsersPresenter(val mainThreadScheduler: Scheduler, val usersRepo: IGithubU
     }
 
     private fun loadData() {
-        usersRepo.getUsers()
+        // используется flatMap, чтобы из каждого элемента pokemon_entries в списке PokedexKanto достать pokemon_species
+        usersRepo.getUsers().flatMap {
+            Single.fromCallable {
+                val listPokemonSpecies: MutableList<UserPokemonSpecies> = arrayListOf()
+                it.pokemon_entries?.let {
+                    // внимание: it поменялся
+                    for (i in it.indices) {                                 // вариант записи: for (i in 0 until it.size) {
+                        listPokemonSpecies.add(it[i].pokemon_species!!)     // вариант записи: it.get(i).pokemon_species!!
+                        listPokemonSpecies[i].pokemonUrl = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/" + (i + 1) + ".png"
+                    }
+                }
+                return@fromCallable listPokemonSpecies // как вариант: можно писать без return@fromCallable
+            }
+        }
             .observeOn(mainThreadScheduler)
             .subscribe({ users ->
                 usersListPresenter.users.clear()
-
-
-                val listPokemonSpecies: MutableList<UserPokemonSpecies> = arrayListOf()
-                users.pokemon_entries?.let {
-                    for (i in 0 .. (it.size - 1) ) {
-                        listPokemonSpecies.add(it.get(i).pokemon_species!!)
-                        listPokemonSpecies[i].pokemonUrl = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/" + (i+1) + ".png"
-                    }
-                }
-
-                usersListPresenter.users.addAll(listPokemonSpecies)
+                usersListPresenter.users.addAll(users)
                 viewState.updateList()
             }, {
                 println("Error: ${it.message}")
