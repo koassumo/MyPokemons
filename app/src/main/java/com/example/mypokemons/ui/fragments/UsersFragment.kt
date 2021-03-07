@@ -12,6 +12,7 @@ import moxy.ktx.moxyPresenter
 import com.example.mypokemons.ApiHolder
 import com.example.mypokemons.App
 import com.example.mypokemons.R
+import com.example.mypokemons.mvp.model.entity.room.Database
 //import com.example.mypokemons.mvp.model.entity.room.Database
 import com.example.mypokemons.mvp.model.repo.retrofit.RetrofitGithubUsersRepo
 import com.example.mypokemons.mvp.presenter.UsersPresenter
@@ -28,7 +29,7 @@ class UsersFragment : MvpAppCompatFragment(), UsersView, BackButtonListener {
 
     val presenter: UsersPresenter by moxyPresenter { UsersPresenter(AndroidSchedulers.mainThread(),
 //        RetrofitGithubUsersRepo(ApiHolder().api, AndroidNetworkStatus(App.instance), Database.getInstance()),
-        RetrofitGithubUsersRepo(ApiHolder().api, AndroidNetworkStatus(App.instance)),
+        RetrofitGithubUsersRepo(ApiHolder().api, AndroidNetworkStatus(App.instance), Database.getInstance()),
         App.instance.router) }
 
     var adapter: UsersRVAdapter? = null
