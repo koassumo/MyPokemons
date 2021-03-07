@@ -1,6 +1,7 @@
 package com.example.mypokemons.mvp.model.api
 
 import com.example.igorpokemon.mvp.model.entity.PokedexKanto
+import com.example.igorpokemon.mvp.model.entity.UserPokemonSpecies
 import com.example.mypokemons.mvp.model.entity.Pokemon
 import io.reactivex.rxjava3.core.Single
 import retrofit2.http.GET

@@ -2,7 +2,8 @@ plugins {
     id 'com.android.application'
     id 'kotlin-android'
 
-    // !!!! ---- НЕ ЗАБУДЬ ДОБАВИТЬ  и нажать Sync Now ----- !!!!!
+    // !!!! ---- НЕ ЗАБУДЬ ДОБАВИТЬ  и нажать Sync Now,
+    // используется, если в dependencies есть kapt (kotlin annotation process)
     id 'kotlin-android-extensions'
     id 'kotlin-kapt'
 }
@@ -67,5 +68,9 @@ dependencies {
     // Recycle
     implementation "androidx.recyclerview:recyclerview:1.1.0"
     implementation "androidx.cardview:cardview:1.0.0"
+
+    // Room
+    implementation 'androidx.room:room-runtime:2.2.6'
+    kapt 'androidx.room:room-compiler:2.2.6'
 
 }

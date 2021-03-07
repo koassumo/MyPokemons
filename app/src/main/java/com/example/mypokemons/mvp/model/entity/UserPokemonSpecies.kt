@@ -8,10 +8,13 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 class UserPokemonSpecies(
+
     @Expose
     @SerializedName("name")
     var pokemonName: String? = null,
 
+    // @Expose - почему-то здесь работает без @Expose, а поле name - нет
+    // аa, понял - это поле вообще не используется - там же костыль
     @Expose
     @SerializedName("url")
     var pokemonUrl: String? = null

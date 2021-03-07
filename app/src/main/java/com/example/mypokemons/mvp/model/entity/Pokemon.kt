@@ -7,7 +7,8 @@ import kotlinx.android.parcel.Parcelize
 
 
 // этот класс для запроса одного конкретного покемона
-//  https://pokeapi.co/api/v2/pokemon/{имя покемона}
+// https://pokeapi.co/api/v2/pokemon/{имя покемона}
+// пример json в папке test
 
 @Parcelize
 class Pokemon (

@@ -12,12 +12,14 @@ import moxy.ktx.moxyPresenter
 import com.example.mypokemons.ApiHolder
 import com.example.mypokemons.App
 import com.example.mypokemons.R
+//import com.example.mypokemons.mvp.model.entity.room.Database
 import com.example.mypokemons.mvp.model.repo.retrofit.RetrofitGithubUsersRepo
 import com.example.mypokemons.mvp.presenter.UsersPresenter
 import com.example.mypokemons.mvp.view.UsersView
 import com.example.mypokemons.ui.BackButtonListener
 import com.example.mypokemons.ui.adapter.UsersRVAdapter
 import com.example.mypokemons.ui.image.GlideImageLoader
+import com.example.mypokemons.mvp.model.network.AndroidNetworkStatus
 
 class UsersFragment : MvpAppCompatFragment(), UsersView, BackButtonListener {
     companion object {
@@ -25,7 +27,8 @@ class UsersFragment : MvpAppCompatFragment(), UsersView, BackButtonListener {
     }
 
     val presenter: UsersPresenter by moxyPresenter { UsersPresenter(AndroidSchedulers.mainThread(),
-        RetrofitGithubUsersRepo(ApiHolder().api),
+//        RetrofitGithubUsersRepo(ApiHolder().api, AndroidNetworkStatus(App.instance), Database.getInstance()),
+        RetrofitGithubUsersRepo(ApiHolder().api, AndroidNetworkStatus(App.instance)),
         App.instance.router) }
 
     var adapter: UsersRVAdapter? = null
