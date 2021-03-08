@@ -8,7 +8,7 @@ import androidx.room.PrimaryKey
 class RoomUserPokemonSpecies(
     @PrimaryKey
 //    @ColumnInfo (name = "id")
-//    var id: Int,
+//    var pokemonId: Int,
 
     @ColumnInfo (name = "name")
     var pokemonName: String,

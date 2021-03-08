@@ -10,7 +10,6 @@ class LoginPresenter(val mainThreadScheduler: Scheduler, val retrofitPokemon: IP
 
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
-//        viewState.printLogin("assadfsfdsfdadfsa")
         loadData()
     }
 
@@ -24,7 +23,6 @@ class LoginPresenter(val mainThreadScheduler: Scheduler, val retrofitPokemon: IP
                 }, {
                     println("Error: ${it.message}")
                 })
-
     }
 
     fun backPressed(): Boolean {
